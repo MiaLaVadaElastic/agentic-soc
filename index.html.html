@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is an Agentic Security Operations Platform? | Complete Guide 2026</title>
+<meta name="description" content="A vendor-agnostic guide to agentic security operations platforms: what they are, how they work, why legacy SOCs can't keep pace with AI-powered attacks, and what capabilities to look for.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is an Agentic Security Operations Platform?",
+  "description": "A comprehensive, vendor-agnostic guide to agentic security operations: definitions, architecture, capabilities, and evaluation criteria for security leaders.",
+  "author": {"@type": "Organization", "name": "Elastic Security"},
+  "datePublished": "2026-04-24",
+  "dateModified": "2026-04-24",
+  "mainEntityOfPage": {"@type": "WebPage"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an agentic security operations platform?",
+      "acceptedAnswer": {"@type": "Answer", "text": "An agentic security operations platform is a unified system in which autonomous AI agents handle the full security lifecycle — from data ingestion and alert correlation through investigation and response — while human analysts retain final judgment and approval authority. It differs from traditional SIEMs and SOAR tools in that it reasons adaptively rather than executing rigid playbooks."}
+    },
+    {
+      "@type": "Question",
+      "name": "How is an agentic SOC different from a traditional SOC?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A traditional SOC relies on a pyramid of analysts manually triaging alerts and escalating to senior staff. An agentic SOC replaces the base of that pyramid with an automation layer. AI agents handle triage, enrichment, correlation, and initial investigation. Human analysts operate as threat engineers — directing strategy, approving responses, and focusing on the threats that require human judgment."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is the human analyst removed from an agentic SOC?",
+      "acceptedAnswer": {"@type": "Answer", "text": "No. The human is not removed from the loop — they are moved to the top of it. The platform investigates, correlates, and builds the response plan. The analyst reads it, judges it, and approves it. This is the distinction between a human in the loop (reviewing every alert) and a human on the loop (reviewing AI-generated cases and approving staged responses)."}
+    },
+    {
+      "@type": "Question",
+      "name": "What capabilities does an agentic security operations platform need?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Three integrated capability areas are required: ingestion at scale (universal data collection across SIEM, endpoint, cloud, and threat intelligence with no coverage gaps forced by pricing), reasoning at machine speed (AI that is grounded in your actual data with full transparency and model choice), and prevention and response (native automation and endpoint protection in the same platform, with human approval gates before execution)."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an agentic SOC and a SOAR?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A SOAR executes deterministic playbooks: if condition A, then action B. This works when attack patterns match expected scenarios but breaks when adversaries deviate. An agentic platform reasons through novel situations, invoking skills dynamically to reach a conclusion. The difference is between a fixed decision tree and an adaptive reasoning system."}
+    },
+    {
+      "@type": "Question",
+      "name": "Why can't traditional SOCs keep pace with AI-powered attacks?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Adversaries now use AI to compress attack timelines from hours to seconds — the fastest recorded breakout time is 27 seconds from initial compromise to lateral movement. Traditional SOCs were built for a world where threats moved at human speed. Fragmented tooling, coverage gaps created by per-device pricing, and bolt-on automation that breaks during active incidents all create structural vulnerabilities that AI-powered attacks are designed to exploit."}
+    },
+    {
+      "@type": "Question",
+      "name": "What does human on the loop mean in security operations?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Human on the loop describes the agentic SOC model: AI handles investigation, correlation, and response planning autonomously, but a human analyst reviews the complete case and approves every significant response before it executes. The analyst is not reviewing raw alerts — they are reviewing a fully assembled case with AI-generated reasoning they can validate, challenge, or override."}
+    },
+    {
+      "@type": "Question",
+      "name": "How do you evaluate an agentic security operations platform?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Key evaluation questions include: Can the platform ingest all data sources without pricing-forced coverage gaps? Does it reason adaptively or execute pre-scripted playbooks? Can analysts see and validate every AI decision? Is automation native to the platform or a separate integration? Can historical data be queried in real time during an active incident? Does it support model sovereignty and deployment flexibility for air-gapped or regulated environments?"}
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #080c14;
+    --bg2: #0d1320;
+    --bg3: #111827;
+    --border: rgba(99,132,195,0.15);
+    --border2: rgba(99,132,195,0.25);
+    --text: #e8edf5;
+    --text2: #99a8c0;
+    --text3: #5f6e85;
+    --blue: #3b7cf0;
+    --blue-light: #6aa0f8;
+    --blue-dim: rgba(59,124,240,0.12);
+    --cyan: #22d3c8;
+    --cyan-dim: rgba(34,211,200,0.1);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.1);
+    --red: #f05252;
+    --red-dim: rgba(240,82,82,0.1);
+    --green: #10b981;
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'Sora', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --max: 1100px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(8,12,20,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand { font-family: var(--font-mono); font-size: 12px; color: var(--blue-light); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  #reading-progress { position: fixed; top: 58px; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); z-index: 200; transition: width 0.1s; }
+
+  /* ── LAYOUT ── */
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+  .divider { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+  .divider hr { border: none; border-top: 1px solid var(--border); }
+  .section { max-width: var(--max); margin: 0 auto; padding: 80px 2rem; }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue-light); margin-bottom: 1rem;
+  }
+  .eyebrow.cyan { color: var(--cyan); }
+  .eyebrow.amber { color: var(--amber); }
+
+  h2.title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--text); margin-bottom: 1.25rem; max-width: 700px;
+  }
+  h2.title em { font-style: italic; color: var(--blue-light); }
+
+  .lead { font-size: 1.05rem; color: var(--text2); max-width: 640px; margin-bottom: 3rem; line-height: 1.85; }
+
+  /* ── HERO ── */
+  .hero { position: relative; padding: 110px 2rem 90px; max-width: var(--max); margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--cyan); background: var(--cyan-dim);
+    border: 1px solid rgba(34,211,200,0.2); border-radius: 4px;
+    padding: 5px 12px; margin-bottom: 2rem;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 400; line-height: 1.08; letter-spacing: -0.02em;
+    color: var(--text); max-width: 820px; margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--blue-light); }
+
+  .hero-sub { font-size: 1.1rem; color: var(--text2); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.8; }
+
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 4rem; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff;
+    font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    padding: 11px 22px; border-radius: var(--radius);
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text2);
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    padding: 11px 22px; border-radius: var(--radius);
+    text-decoration: none; border: 1px solid var(--border2); cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--blue); transform: translateY(-1px); }
+
+  /* ── TICKER ── */
+  .ticker {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .tick { background: var(--bg2); padding: 1.5rem; position: relative; }
+  .tick::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .tick.red::before { background: var(--red); }
+  .tick.amber::before { background: var(--amber); }
+  .tick.blue::before { background: var(--blue); }
+  .tick.cyan::before { background: var(--cyan); }
+  .tick-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.5rem; }
+  .tick-val { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; margin-bottom: 0.4rem; }
+  .tick.red .tick-val { color: var(--red); }
+  .tick.amber .tick-val { color: var(--amber); }
+  .tick.blue .tick-val { color: var(--blue-light); }
+  .tick.cyan .tick-val { color: var(--cyan); }
+  .tick-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── DEFINITION ── */
+  .def-box {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-left: 3px solid var(--blue); border-radius: var(--radius-lg);
+    padding: 2.5rem; margin-bottom: 2.5rem;
+  }
+  .def-box .def-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.75rem; }
+  .def-box p { font-size: 1.05rem; color: var(--text); line-height: 1.8; }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; align-items: start; }
+
+  /* ── CRISIS STATS ── */
+  .crisis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+  .crisis-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
+  .crisis-card .cn { font-family: var(--font-display); font-size: 2.8rem; line-height: 1; margin-bottom: 0.5rem; }
+  .crisis-card.cr .cn { color: var(--red); }
+  .crisis-card.ca .cn { color: var(--amber); }
+  .crisis-card.cb .cn { color: var(--blue-light); }
+  .crisis-card .cd { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .crisis-card .cs { font-family: var(--font-mono); font-size: 10px; color: var(--text3); margin-top: 0.75rem; }
+
+  /* ── SOC EVOLUTION ── */
+  .evo-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin-top: 2.5rem; }
+  .evo-side { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+  .evo-side.old { border-top: 2px solid var(--text3); }
+  .evo-side.new { border-top: 2px solid var(--cyan); }
+  .evo-side h3 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .evo-side.old h3 { color: var(--text3); }
+  .evo-side.new h3 { color: var(--cyan); }
+  .evo-tier { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .evo-tier:last-of-type { border-bottom: none; }
+  .evo-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .evo-dot.dim { background: var(--text3); }
+  .evo-dot.mid { background: var(--text2); }
+  .evo-dot.full { background: var(--text); }
+  .evo-dot.ai { background: var(--cyan); }
+  .evo-dot.eng { background: var(--blue-light); }
+  .evo-lbl { color: var(--text2); flex: 1; }
+  .evo-pct { font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
+  .evo-note { font-size: 12px; color: var(--text3); margin-top: 1.25rem; line-height: 1.6; }
+  .evo-arrow { font-size: 2rem; color: var(--blue); text-align: center; }
+
+  /* ── CAPABILITIES ── */
+  .cap-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    overflow: hidden; margin-top: 2.5rem;
+  }
+  .cap-card { background: var(--bg2); padding: 2.25rem; }
+  .cap-n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text3); margin-bottom: 0.5rem; }
+  .cap-title { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .cap-card:nth-child(1) .cap-title { color: var(--blue-light); }
+  .cap-card:nth-child(2) .cap-title { color: var(--cyan); }
+  .cap-card:nth-child(3) .cap-title { color: var(--amber); }
+  .cap-sub { font-size: 12px; color: var(--text3); font-family: var(--font-mono); margin-bottom: 1.25rem; }
+  .cap-body { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 1.25rem; }
+  .cap-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .cap-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--text2); }
+  .cap-list li::before { content: '›'; flex-shrink: 0; margin-top: 1px; }
+  .cap-card:nth-child(1) .cap-list li::before { color: var(--blue-light); }
+  .cap-card:nth-child(2) .cap-list li::before { color: var(--cyan); }
+  .cap-card:nth-child(3) .cap-list li::before { color: var(--amber); }
+
+  /* ── LIFECYCLE ── */
+  .lc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-top: 2.5rem; }
+  .lc-step { background: var(--bg2); padding: 1.75rem 1.5rem; transition: background 0.2s; }
+  .lc-step:hover { background: var(--bg3); }
+  .lc-n { font-family: var(--font-mono); font-size: 11px; color: var(--text3); margin-bottom: 0.6rem; }
+  .lc-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .lc-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; margin-bottom: 0.6rem; display: inline-block; }
+  .lc-tag.auto { background: var(--cyan-dim); color: var(--cyan); }
+  .lc-tag.human { background: var(--amber-dim); color: var(--amber); }
+  .lc-desc { font-size: 12px; color: var(--text3); line-height: 1.6; }
+
+  /* ── INCIDENT TERMINAL ── */
+  .terminal {
+    background: #050810; border: 1px solid rgba(34,211,200,0.2);
+    border-radius: var(--radius-lg); padding: 2rem; font-family: var(--font-mono);
+    font-size: 13px; margin-top: 2.5rem; position: relative; overflow: hidden;
+  }
+  .terminal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--blue), transparent); }
+  .term-hdr { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .term-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+  .term-title { color: var(--cyan); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .term-elapsed { margin-left: auto; font-size: 11px; color: var(--text3); }
+  .term-row { display: flex; gap: 1.5rem; padding: 8px 0; border-bottom: 1px solid rgba(99,132,195,0.07); align-items: flex-start; }
+  .term-row:last-child { border-bottom: none; }
+  .term-t { color: var(--text3); min-width: 52px; font-size: 11px; flex-shrink: 0; }
+  .term-e { color: var(--text2); font-size: 12px; line-height: 1.6; }
+  .term-e .auto { color: var(--cyan); }
+  .term-e .human { color: var(--amber); }
+  .term-e .done { color: var(--green); }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap { overflow-x: auto; margin-top: 2.5rem; }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.cmp thead tr { background: var(--bg3); }
+  table.cmp th { padding: 1rem 1.25rem; text-align: left; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); border-bottom: 1px solid var(--border2); font-weight: 500; }
+  table.cmp th:first-child { width: 26%; }
+  table.cmp th:not(:first-child) { text-align: center; }
+  table.cmp td { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  table.cmp td:first-child { color: var(--text); font-weight: 500; }
+  table.cmp td:not(:first-child) { text-align: center; }
+  table.cmp tr:hover td { background: rgba(59,124,240,0.03); }
+  .hl { background: var(--blue-dim) !important; border-left: 1px solid rgba(59,124,240,0.2); border-right: 1px solid rgba(59,124,240,0.2); }
+  table.cmp thead .hl { color: var(--blue-light) !important; background: rgba(59,124,240,0.15) !important; }
+  .chk { color: var(--cyan); }
+  .crs { color: var(--red); }
+  .par { color: var(--amber); font-size: 13px; }
+
+  /* ── EVALUATION ── */
+  .eval-list { margin-top: 2.5rem; display: flex; flex-direction: column; }
+  .eval-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 1.5rem; align-items: start; padding: 1.75rem 0; border-bottom: 1px solid var(--border); }
+  .eval-item:last-child { border-bottom: none; }
+  .eval-n { font-family: var(--font-display); font-size: 1.5rem; color: rgba(59,124,240,0.2); line-height: 1; margin-top: 4px; }
+  .eval-content h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .eval-content p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; white-space: nowrap; margin-top: 4px; }
+  .badge.crit { background: var(--red-dim); color: var(--red); border: 1px solid rgba(240,82,82,0.2); }
+  .badge.imp { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
+  .badge.strat { background: var(--blue-dim); color: var(--blue-light); border: 1px solid rgba(59,124,240,0.2); }
+
+  /* ── MARKET ── */
+  .mkt-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .mkt-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+  .mkt-card .mn { font-family: var(--font-display); font-size: 2.2rem; color: var(--blue-light); line-height: 1; margin-bottom: 0.4rem; }
+  .mkt-card .ml { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .mkt-card .ms { font-family: var(--font-mono); font-size: 10px; color: var(--text3); margin-top: 0.5rem; }
+
+  /* ── PULLQUOTE ── */
+  .pullquote { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 2.5rem; margin: 3rem 0; position: relative; }
+  .pullquote::before { content: '"'; font-family: var(--font-display); font-size: 5rem; color: rgba(59,124,240,0.12); position: absolute; top: 0.5rem; left: 1.5rem; line-height: 1; pointer-events: none; }
+  .pullquote p { font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--text); line-height: 1.6; margin-bottom: 1rem; }
+  .pullquote cite { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--text3); font-style: normal; }
+
+  /* ── FAQ ── */
+  .faq-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item { background: var(--bg2); }
+  .faq-q { width: 100%; background: transparent; border: none; padding: 1.4rem 2rem; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--text); transition: background 0.15s; }
+  .faq-q:hover { background: var(--bg3); }
+  .faq-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--blue-dim); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--blue-light); font-size: 14px; transition: transform 0.2s, background 0.2s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--blue); color: #fff; border-color: var(--blue); }
+  .faq-a { display: none; padding: 1.25rem 2rem 1.5rem; font-size: 14px; color: var(--text2); line-height: 1.8; border-top: 1px solid var(--border); }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── CTA SECTION ── */
+  .cta-band { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 2rem; text-align: center; }
+  .cta-band h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; color: var(--text); margin-bottom: 1rem; }
+  .cta-band p { font-size: 1rem; color: var(--text2); max-width: 500px; margin: 0 auto 2rem; line-height: 1.8; }
+  .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  .footer-inner { max-width: var(--max); margin: 0 auto; padding: 2.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; border-top: 1px solid var(--border); }
+  .footer-brand { font-family: var(--font-mono); font-size: 12px; color: var(--text3); }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 12px; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text2); }
+
+  /* ── ANIMATIONS ── */
+  .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade.in { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .ticker { grid-template-columns: repeat(2,1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .lc-grid { grid-template-columns: repeat(3,1fr); }
+    .crisis-grid { grid-template-columns: repeat(2,1fr); }
+    .evo-grid { grid-template-columns: 1fr; }
+    .evo-arrow { display: none; }
+    .mkt-strip { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .eval-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .eval-n { display: none; }
+  }
+  @media (max-width: 600px) {
+    .ticker { grid-template-columns: 1fr; }
+    .lc-grid { grid-template-columns: 1fr 1fr; }
+    .crisis-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Agentic Security Ops</a>
+  <ul class="nav-links">
+    <li><a href="#definition">Definition</a></li>
+    <li><a href="#why-now">Why Now</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#comparison">vs Legacy</a></li>
+    <li><a href="#evaluation">Evaluation</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-badge">Thought leadership · 2026 guide</div>
+
+  <h1>What is an <em>agentic security operations</em> platform?</h1>
+
+  <p class="hero-sub">Adversaries are executing attacks in seconds. The security model built for a world of human-speed threats is no longer adequate. This is the definitive guide to the architecture, capabilities, and organizational model of the agentic SOC.</p>
+
+  <div class="btn-row">
+    <a href="#definition" class="btn-primary">Read the guide ↓</a>
+    <a href="#evaluation" class="btn-ghost">Evaluation checklist →</a>
+  </div>
+
+  <div class="ticker fade">
+    <div class="tick red">
+      <div class="tick-label">Fastest recorded breakout</div>
+      <div class="tick-val">27s</div>
+      <div class="tick-desc">From initial compromise to lateral movement — the new floor for adversary speed</div>
+    </div>
+    <div class="tick amber">
+      <div class="tick-label">Average time to lateral move</div>
+      <div class="tick-val">29min</div>
+      <div class="tick-desc">The average window shrinks every quarter as AI-powered attacks mature</div>
+    </div>
+    <div class="tick blue">
+      <div class="tick-label">Analysts describing SOC as painful</div>
+      <div class="tick-val">85%</div>
+      <div class="tick-desc">Burnout is not an HR problem — it is a breach risk. Alert overload is structural.</div>
+    </div>
+    <div class="tick cyan">
+      <div class="tick-label">Agentic AI security market by 2033</div>
+      <div class="tick-val">$322B</div>
+      <div class="tick-desc">Up from $7.8B today. 34% CAGR — the fastest-growing enterprise security segment.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ DEFINITION ═══════════════════════════ -->
+<section class="section" id="definition">
+  <div class="eyebrow">Definition</div>
+  <h2 class="title">The agentic security operations platform, <em>defined</em></h2>
+
+  <div class="def-box fade">
+    <div class="def-label">Definition — Agentic Security Operations Platform</div>
+    <p>An <strong>agentic security operations platform</strong> is a unified system in which autonomous AI agents handle the full security lifecycle — from data ingestion and alert correlation through threat investigation and response execution — while human analysts retain final judgment, approval authority, and strategic direction. It is distinguished from legacy SIEM, XDR, and SOAR tools by its capacity for adaptive reasoning rather than rigid, pre-scripted playbooks.</p>
+  </div>
+
+  <div class="two-col fade">
+    <div>
+      <p style="color:var(--text2);font-size:14px;line-height:1.85;margin-bottom:1.25rem;">The term "agentic" is precise. In AI systems design, an agent is a system that pursues a goal autonomously — choosing which tools to use, in what order, to achieve an outcome. Unlike a chatbot that responds to prompts, or a SOAR that executes pre-mapped playbooks, an AI agent <em>reasons</em>. It can handle attacks it has never seen before.</p>
+      <p style="color:var(--text2);font-size:14px;line-height:1.85;margin-bottom:1.25rem;">The critical distinction: an agentic security operations platform does not replace the human analyst. It repositions them. The platform investigates, correlates, and stages the response. The analyst reads the case, validates the reasoning, and approves the action. This is the difference between a human <em>in</em> the loop and a human <em>on</em> the loop.</p>
+      <p style="color:var(--text2);font-size:14px;line-height:1.85;">No responsible security organization should deploy a fully autonomous SOC without human oversight. The agentic model is designed specifically to preserve that oversight while operating at the speed the threat environment now demands.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;">Not this</div>
+        <h4 style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:0.4rem;">A fully autonomous SOC</h4>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;">Every significant response action requires analyst approval before execution. Removing that gate is not the agentic model — it is an unacceptable risk posture.</p>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;">Not this</div>
+        <h4 style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:0.4rem;">A SOAR with an AI layer</h4>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;">Legacy SOAR tools execute deterministic playbooks. Agentic platforms reason through novel situations dynamically — they are architecturally different, not incrementally better.</p>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;">Not this</div>
+        <h4 style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:0.4rem;">A next-generation SIEM</h4>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;">A SIEM ingests and correlates. An agentic platform ingests, reasons, investigates, builds a case, proposes a response, and executes it — in one unified system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ WHY NOW ═══════════════════════════ -->
+<section class="section" id="why-now">
+  <div class="eyebrow amber">Why now</div>
+  <h2 class="title">The threat environment changed. The SOC model <em>hasn't.</em></h2>
+  <p class="lead">Security architectures were built for a world where threats moved at human speed. That world is gone. The convergence of adversarial AI, analyst burnout, and architectural fragmentation has created a structural crisis in security operations.</p>
+
+  <div class="crisis-grid fade">
+    <div class="crisis-card cr">
+      <div class="cn">4.5×</div>
+      <div class="cd">Higher click-through rate of AI-generated phishing versus traditional methods. Social engineering is now industrialized at scale.</div>
+      <div class="cs">Microsoft Digital Defense Report, 2025</div>
+    </div>
+    <div class="crisis-card ca">
+      <div class="cn">74%</div>
+      <div class="cd">Of breaches involve alerts that were generated but ignored — not because analysts weren't paying attention, but because the noise-to-signal ratio made processing impossible.</div>
+      <div class="cs">Verizon DBIR</div>
+    </div>
+    <div class="crisis-card cb">
+      <div class="cn">&lt;2yr</div>
+      <div class="cd">Average analyst tenure before burnout-driven attrition. The talent crisis is not a pipeline problem — it is a tooling problem.</div>
+      <div class="cs">Tines / Abnormal AI Research</div>
+    </div>
+    <div class="crisis-card cb">
+      <div class="cn">11</div>
+      <div class="cd">Average number of security consoles an analyst navigates per investigation. Each pivot is time the adversary is already using.</div>
+      <div class="cs">Microsoft / Omdia State of SOC</div>
+    </div>
+    <div class="crisis-card ca">
+      <div class="cn">66%</div>
+      <div class="cd">Of SOCs lose an entire workday every week manually aggregating data across disconnected tools — before a single threat is investigated.</div>
+      <div class="cs">Microsoft / Omdia State of SOC</div>
+    </div>
+    <div class="crisis-card cr">
+      <div class="cn">91%</div>
+      <div class="cd">Of security leaders trace a serious incident directly back to friction between their disconnected tools. Fragmentation is not a cost issue — it is a breach vector.</div>
+      <div class="cs">Microsoft / Omdia State of SOC</div>
+    </div>
+  </div>
+
+  <div class="pullquote fade">
+    <p>The security industry's default response to new threat categories is a new product. New SKU, new interface, new operational overhead, new procurement cycle. That model made sense when threats evolved slowly enough for organizations to absorb the complexity. It no longer does.</p>
+    <cite>— Mike Nichols, GM of Security, Elastic</cite>
+  </div>
+
+  <!-- SOC Evolution -->
+  <div style="margin-top:3rem;">
+    <div class="eyebrow">The structural shift</div>
+    <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:400;margin-bottom:0.6rem;color:var(--text);">From triage pyramid to engineering diamond</h3>
+    <p style="color:var(--text2);font-size:14px;max-width:640px;line-height:1.8;">As agents absorb routine triage and enrichment, analysts move up — becoming threat engineers who direct strategy, tune agents, and focus on the threats that require human judgment. The SOC gets faster, more accurate, and harder to breach.</p>
+  </div>
+
+  <div class="evo-grid fade">
+    <div class="evo-side old">
+      <h3>Today — the pyramid</h3>
+      <div class="evo-tier"><div class="evo-dot dim"></div><span class="evo-lbl">Leads &amp; threat hunters</span><span class="evo-pct">5%</span></div>
+      <div class="evo-tier"><div class="evo-dot mid"></div><span class="evo-lbl">Senior analysts — escalation layer</span><span class="evo-pct">15%</span></div>
+      <div class="evo-tier"><div class="evo-dot full"></div><span class="evo-lbl">Tier-1 triage analysts</span><span class="evo-pct">80%</span></div>
+      <p class="evo-note">Most analyst capacity consumed by manual alert triage and tool pivoting. High burnout. Threats get missed.</p>
+    </div>
+    <div class="evo-arrow">→</div>
+    <div class="evo-side new">
+      <h3>Tomorrow — the diamond</h3>
+      <div class="evo-tier"><div class="evo-dot eng"></div><span class="evo-lbl">Threat engineers — strategy &amp; hunting</span><span class="evo-pct">40%</span></div>
+      <div class="evo-tier"><div class="evo-dot eng"></div><span class="evo-lbl">Analysts — judgment, approval, direction</span><span class="evo-pct">40%</span></div>
+      <div class="evo-tier"><div class="evo-dot ai"></div><span class="evo-lbl">Agentic automation layer</span><span class="evo-pct">Base</span></div>
+      <p class="evo-note">AI handles what scale demands. Humans handle what judgment demands. Analysts work at higher leverage on the threats that matter.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ CAPABILITIES ═══════════════════════════ -->
+<section class="section" id="capabilities">
+  <div class="eyebrow cyan">Core capabilities</div>
+  <h2 class="title">What an agentic platform <em>requires</em></h2>
+  <p class="lead">Three integrated capability areas define an agentic security operations platform. These are not separate products — they are a single, unified system. Every boundary between them is a delay the adversary exploits.</p>
+
+  <div class="cap-grid fade">
+    <div class="cap-card">
+      <div class="cap-n">01</div>
+      <div class="cap-title">Ingestion at scale</div>
+      <div class="cap-sub">Perceive everything, miss nothing</div>
+      <p class="cap-body">An agentic platform can only reason over data it can see. Coverage gaps — whether forced by per-device pricing or rigid data pipelines — become attack surface. AI-driven threats are engineered to find unmonitored assets.</p>
+      <ul class="cap-list">
+        <li>Universal ingestion: SIEM, endpoint, cloud, SaaS, and threat intelligence in one platform</li>
+        <li>Automatic schema mapping — no pipeline engineering required per new data source</li>
+        <li>Federated search across cloud, on-prem, and edge without forcing data centralization</li>
+        <li>Years of history queryable in real time — no rehydration delays during active incidents</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <div class="cap-n">02</div>
+      <div class="cap-title">Reason at machine speed</div>
+      <div class="cap-sub">AI grounded in your data, transparent by design</div>
+      <p class="cap-body">The reasoning layer is where agentic platforms differ most from legacy tools. AI decisions must be grounded in your actual security data — not an abstraction layer — and transparent enough that analysts can validate every conclusion.</p>
+      <ul class="cap-list">
+        <li>AI reasoning over your data where it lives — no connector abstraction, no data copy</li>
+        <li>Composable AI skills: discrete, executable capabilities agents invoke dynamically</li>
+        <li>Full AI transparency — visible prompts, auditable decisions, no black boxes</li>
+        <li>Model agnosticism — any LLM, including on-premises models for air-gapped environments</li>
+      </ul>
+    </div>
+    <div class="cap-card">
+      <div class="cap-n">03</div>
+      <div class="cap-title">Prevention and response</div>
+      <div class="cap-sub">From detection to containment at machine speed</div>
+      <p class="cap-body">Prevention is the fastest possible response. But when an active incident requires containment, the response must execute faster than a human queue can process. Agentic workflows — validated by a human before execution — close this gap.</p>
+      <ul class="cap-list">
+        <li>Native automation in the same platform as detection — no separate SOAR integration</li>
+        <li>Adaptive reasoning over pre-scripted playbooks that break against novel attacks</li>
+        <li>Human approval gates before any significant action executes</li>
+        <li>World-class endpoint prevention with no per-device pricing that creates coverage gaps</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Incident lifecycle -->
+  <div style="margin-top:3.5rem;">
+    <div class="eyebrow">End-to-end incident flow</div>
+    <h3 style="font-family:var(--font-display);font-size:1.6rem;font-weight:400;margin-bottom:0.5rem;color:var(--text);">How an incident moves through an agentic platform</h3>
+    <p style="font-size:13px;color:var(--text3);max-width:580px;line-height:1.7;">The platform handles what scale demands. The analyst handles what judgment demands. Both are essential — and each does what they are built for.</p>
+  </div>
+
+  <div class="lc-grid fade">
+    <div class="lc-step">
+      <div class="lc-n">01</div>
+      <div class="lc-name">Ingest &amp; normalize</div>
+      <span class="lc-tag auto">Platform</span>
+      <div class="lc-desc">All data sources onboarded automatically. Schema mapped. Detection rules recommended. No data engineering required.</div>
+    </div>
+    <div class="lc-step">
+      <div class="lc-n">02</div>
+      <div class="lc-name">Correlate &amp; discover</div>
+      <span class="lc-tag auto">Platform</span>
+      <div class="lc-desc">Alerts across SIEM, endpoint, and cloud correlated into a single attack narrative. Noise becomes signal.</div>
+    </div>
+    <div class="lc-step">
+      <div class="lc-n">03</div>
+      <div class="lc-name">Investigate &amp; enrich</div>
+      <span class="lc-tag auto">Platform</span>
+      <div class="lc-desc">Agent pulls entity context, runs threat intel lookups, maps MITRE ATT&amp;CK. Full case built before the analyst opens it.</div>
+    </div>
+    <div class="lc-step">
+      <div class="lc-n">04</div>
+      <div class="lc-name">Review &amp; approve</div>
+      <span class="lc-tag human">Analyst</span>
+      <div class="lc-desc">Analyst reviews the complete case, validates the AI's reasoning, and approves or adjusts the staged response.</div>
+    </div>
+    <div class="lc-step">
+      <div class="lc-n">05</div>
+      <div class="lc-name">Execute &amp; close</div>
+      <span class="lc-tag auto">Platform</span>
+      <div class="lc-desc">Platform executes the approved response. Full audit trail preserved. Case closed with complete context.</div>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="terminal fade">
+    <div class="term-hdr">
+      <div class="term-dot"></div>
+      <div class="term-title">Real-world scenario — APT incident, from first alert to approved response</div>
+      <div class="term-elapsed">Total elapsed: &lt;10 min</div>
+    </div>
+    <div class="term-row">
+      <div class="term-t">T+0:00</div>
+      <div class="term-e"><span class="auto">[Platform]</span> 1,247 alerts ingested from SIEM, endpoint, and cloud. Attack Discovery skill identifies 5 alerts belonging to a single coordinated attack chain.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-t">T+0:05</div>
+      <div class="term-e"><span class="auto">[Platform]</span> Complete attack narrative built: DLL side-loading + C2 communication. MITRE ATT&amp;CK kill chain mapped. Case created and assigned.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-t">T+0:30</div>
+      <div class="term-e"><span class="auto">[Platform]</span> Hash confirmed malicious (48/77 AV detections). Threat attributed to Lotus Blossom APT. Hunt queries auto-generated. Incident channel created and staffed.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-t">T+8:00</div>
+      <div class="term-e"><span class="human">[Analyst]</span> Case reviewed. Attack narrative validated. Response plan approved: isolate host, block C2, hunt laterally, reset credentials.</div>
+    </div>
+    <div class="term-row">
+      <div class="term-t">T+9:45</div>
+      <div class="term-e"><span class="done">[Resolved]</span> Response executed. Manual equivalent: 2–6 hours. Agentic platform: under 10 minutes.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ COMPARISON ═══════════════════════════ -->
+<section class="section" id="comparison">
+  <div class="eyebrow">Comparison</div>
+  <h2 class="title">Agentic SOC vs <em>legacy architecture</em></h2>
+  <p class="lead">The legacy model was not built for this moment. Here is how an agentic platform differs across the dimensions that matter to a security leader evaluating direction.</p>
+
+  <div class="table-wrap fade">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Legacy SIEM + SOAR</th>
+          <th>Next-gen XDR</th>
+          <th class="hl">Agentic SOC platform</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Incident response speed</td>
+          <td>Hours — manual triage &amp; escalation</td>
+          <td>Minutes — automated playbooks</td>
+          <td class="hl">Seconds to minutes — agentic reasoning + human approval</td>
+        </tr>
+        <tr>
+          <td>Handling novel attacks</td>
+          <td><span class="crs">✕</span> Playbooks require pre-mapping</td>
+          <td><span class="par">~</span> Rules-based, limited adaptability</td>
+          <td class="hl"><span class="chk">✓</span> Agent reasons through unseen patterns</td>
+        </tr>
+        <tr>
+          <td>Data coverage model</td>
+          <td><span class="crs">✕</span> Pricing may force coverage gaps</td>
+          <td><span class="par">~</span> Endpoint-centric, gaps elsewhere</td>
+          <td class="hl"><span class="chk">✓</span> Universal ingestion, no forced tradeoffs</td>
+        </tr>
+        <tr>
+          <td>AI transparency</td>
+          <td><span class="crs">✕</span> Black-box vendor AI (if any)</td>
+          <td><span class="par">~</span> Proprietary models, limited auditability</td>
+          <td class="hl"><span class="chk">✓</span> Full prompt visibility, model choice, auditable</td>
+        </tr>
+        <tr>
+          <td>Human role</td>
+          <td>In the loop — reviews every alert</td>
+          <td>In the loop — reviews escalations</td>
+          <td class="hl">On the loop — judgment &amp; final approval</td>
+        </tr>
+        <tr>
+          <td>Tool consolidation</td>
+          <td><span class="crs">✕</span> SIEM + SOAR + XDR as separate products</td>
+          <td><span class="par">~</span> Endpoint + cloud, SOAR still separate</td>
+          <td class="hl"><span class="chk">✓</span> Detection, investigation, response in one platform</td>
+        </tr>
+        <tr>
+          <td>Historical data at incident time</td>
+          <td><span class="crs">✕</span> Rehydration delays</td>
+          <td><span class="crs">✕</span> Limited lookback</td>
+          <td class="hl"><span class="chk">✓</span> Years of history queryable in real time</td>
+        </tr>
+        <tr>
+          <td>Deployment flexibility</td>
+          <td><span class="par">~</span> Mostly cloud-dependent</td>
+          <td><span class="par">~</span> Mostly cloud-native</td>
+          <td class="hl"><span class="chk">✓</span> Cloud, on-prem, air-gapped — model sovereignty</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ MARKET ═══════════════════════════ -->
+<section class="section" id="market">
+  <div class="eyebrow">Market context</div>
+  <h2 class="title">The category is forming <em>now</em></h2>
+  <p class="lead">Security leaders are not asking whether agentic AI will reshape security operations. They are asking whether their current vendor is building for it or catching up to it.</p>
+
+  <div class="mkt-strip fade">
+    <div class="mkt-card">
+      <div class="mn">$322B</div>
+      <div class="ml">Projected value of agentic AI in cybersecurity by 2033, up from $7.8B today</div>
+      <div class="ms">Grand View Research</div>
+    </div>
+    <div class="mkt-card">
+      <div class="mn">80%</div>
+      <div class="ml">Of CISOs prioritizing AI-driven security investments in their 2026 budget</div>
+      <div class="ms">Glilot Capital CISO Survey</div>
+    </div>
+    <div class="mkt-card">
+      <div class="mn">77%</div>
+      <div class="ml">Of CISOs expect SOC analysts to be the first role significantly augmented by AI</div>
+      <div class="ms">Team8 CISO Survey 2025</div>
+    </div>
+  </div>
+
+  <div class="pullquote fade">
+    <p>The question isn't whether to bring AI into your SOC. The adversary already answered that for you.</p>
+    <cite>— Mike Nichols, GM of Security, Elastic · "Architecting the SOC of the Future," April 2026</cite>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ EVALUATION ═══════════════════════════ -->
+<section class="section" id="evaluation">
+  <div class="eyebrow">Evaluation guide</div>
+  <h2 class="title">Questions to ask before you <em>commit to a platform</em></h2>
+  <p class="lead">These questions are designed for CISOs and security leaders assessing platform readiness — not vendor pitches. A platform that cannot satisfy the critical criteria below cannot credibly claim the agentic label.</p>
+
+  <div class="eval-list fade">
+    <div class="eval-item">
+      <div class="eval-n">1</div>
+      <div class="eval-content">
+        <h4>Can your platform ingest all data sources without pricing-forced coverage gaps?</h4>
+        <p>Per-device or per-source pricing that requires you to choose which assets to monitor is incompatible with an agentic model. AI-driven attacks probe everything. If your coverage has gaps, your defense does too.</p>
+      </div>
+      <div class="badge crit">Critical</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">2</div>
+      <div class="eval-content">
+        <h4>Does your platform reason adaptively, or execute pre-scripted playbooks?</h4>
+        <p>Deterministic automation breaks when attackers deviate from expected patterns. An agentic platform uses skills invoked dynamically by an agent reasoning through each incident — including attacks it has never encountered before.</p>
+      </div>
+      <div class="badge crit">Critical</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">3</div>
+      <div class="eval-content">
+        <h4>Can your analysts see and validate every AI decision?</h4>
+        <p>Transparent AI — visible prompts, auditable reasoning, verifiable outputs — is not optional in a security context. If your AI cannot show its work, your analysts cannot trust its conclusions. Unauditable AI decisions are also an emerging compliance liability.</p>
+      </div>
+      <div class="badge crit">Critical</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">4</div>
+      <div class="eval-content">
+        <h4>Is automation native to the platform, or a separate integration layer?</h4>
+        <p>A standalone SOAR creates an integration point that fails during active incidents — exactly when response speed matters most. Native automation in the same system as detection eliminates this failure mode.</p>
+      </div>
+      <div class="badge imp">Important</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">5</div>
+      <div class="eval-content">
+        <h4>Can you access historical data in real time during an active incident?</h4>
+        <p>Rehydration delays that make historical logs unavailable for hours are a structural vulnerability. An agentic platform requires years of telemetry accessible at query time, with no penalty for looking back during an active campaign.</p>
+      </div>
+      <div class="badge imp">Important</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">6</div>
+      <div class="eval-content">
+        <h4>Does the platform support model sovereignty and deployment flexibility?</h4>
+        <p>Regulated organizations — particularly government and financial services — require the ability to choose their AI model, including fully disconnected on-premises models. Vendor lock-in to a single LLM is incompatible with data residency and sovereignty requirements.</p>
+      </div>
+      <div class="badge strat">Strategic</div>
+    </div>
+    <div class="eval-item">
+      <div class="eval-n">7</div>
+      <div class="eval-content">
+        <h4>Is the platform open and auditable by design?</h4>
+        <p>Open detection rules, open schemas, open agentic frameworks are the foundation for trust and community validation. A platform that locks its logic in proprietary formats cannot be independently verified — and cannot be adapted to your specific environment.</p>
+      </div>
+      <div class="badge strat">Strategic</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══════════════════════════ FAQ ═══════════════════════════ -->
+<section class="section" id="faq">
+  <div class="eyebrow">FAQ</div>
+  <h2 class="title">Frequently asked questions</h2>
+  <p class="lead">Questions security leaders commonly ask when evaluating the agentic security operations model — structured for both human readers and answer engine indexing.</p>
+
+  <div class="faq-list fade">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What is an agentic security operations platform?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">An agentic security operations platform is a unified system in which autonomous AI agents handle the full security lifecycle — from data ingestion and alert correlation through investigation and response — while human analysts retain final judgment and approval authority. It differs from traditional SIEMs and SOAR tools in that it reasons adaptively rather than executing rigid playbooks. The key architectural distinction: the human moves from being in the loop (reviewing every alert) to being on the loop (reviewing AI-generated cases and approving staged responses).</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How is an agentic SOC different from a traditional SOC?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">A traditional SOC relies on a pyramid of analysts manually triaging alerts and escalating to senior staff. An agentic SOC replaces the base of that pyramid with an automation layer. AI agents handle triage, enrichment, correlation, and initial investigation. Human analysts operate as threat engineers — directing strategy, approving responses, and focusing on the threats that require human judgment. The result is what security leaders call the "diamond model": the SOC gets faster, more accurate, and harder to breach.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is the human analyst removed from an agentic SOC?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">No — and this is the most important thing to understand about the model. The human analyst is not removed from the loop. They are moved to the top of it. The platform builds the case, stages the response, and presents its reasoning. The analyst validates the logic, judges the confidence level, and approves the action. Autonomy operates at the investigation layer; human judgment operates at the decision and approval layer. No responsible security organization should deploy a fully autonomous SOC without this oversight structure.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What is the difference between an agentic SOC and a SOAR?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">A SOAR executes deterministic playbooks: if condition A, then action B. This works when attack patterns match expected scenarios but breaks when adversaries deviate — which AI-powered attacks increasingly do. An agentic platform reasons through novel situations, invoking skills dynamically to reach a conclusion. A skill is a discrete, executable capability — like running a query, looking up a hash, or isolating a host — that an agent selects based on the specific situation at hand. The difference is between a fixed decision tree and an adaptive reasoning system.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What does "human on the loop" mean in security operations?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Human on the loop describes the agentic SOC model: AI handles investigation, correlation, and response planning autonomously, but a human analyst reviews the complete case and approves every significant response before it executes. This is distinct from "human in the loop," where an analyst must act on each individual alert or escalation. In the agentic model, the analyst is not reviewing raw alerts — they are reviewing a fully assembled case with AI-generated reasoning they can validate, challenge, or override.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Why can't traditional SOCs keep pace with AI-powered attacks?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Three structural problems have converged. First, adversary speed: AI-powered attacks compress breakout times from hours to seconds — the fastest recorded is 27 seconds from initial compromise to lateral movement. Second, analyst capacity: 85% of analysts describe SOC work as painful, and average tenure before burnout-driven attrition has dropped below two years. Tools that create work instead of eliminating it accelerate this. Third, architectural fragmentation: the average SOC navigates 11 separate consoles per investigation. Each pivot is time the adversary is already using.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What capabilities does an agentic security operations platform require?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Three integrated capability areas are necessary. First, ingestion at scale: universal data collection across all environments with no coverage gaps, automatic schema mapping, and long-term data retention queryable in real time. Second, reasoning at machine speed: AI grounded directly in your security data with full transparency, composable skills agents invoke dynamically, and model agnosticism so you retain choice over your AI infrastructure. Third, prevention and response: native automation and endpoint protection in the same platform as detection — with human approval gates before execution.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do you evaluate an agentic security operations platform?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Key evaluation questions include: Can the platform ingest all data sources without pricing-forced coverage gaps? Does it reason adaptively or execute pre-scripted playbooks? Can analysts see and validate every AI decision? Is automation native to the platform or a separate integration? Can historical data be queried in real time during an active incident? Does it support model sovereignty and deployment flexibility for regulated or air-gapped environments? Is the platform open and auditable by design, with open detection rules and open schemas?</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CTA ═══════════════════════════ -->
+<div class="cta-band">
+  <div class="eyebrow cyan" style="margin-bottom:1rem;">Ready to go deeper?</div>
+  <h2>The question isn't whether to bring AI into your SOC.</h2>
+  <p>The adversary already answered that. See how an agentic security operations platform works in practice — and what it takes to get there.</p>
+  <div class="cta-row">
+    <a href="https://www.elastic.co/security" class="btn-primary" target="_blank">Explore Elastic Security →</a>
+    <a href="https://www.elastic.co/contact" class="btn-ghost" target="_blank">Talk to a security expert</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--bg);">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:0.2rem;">Elastic Security</div>
+      <div>An educational resource on agentic security operations · Vendor-agnostic · 2026</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://www.elastic.co/security" target="_blank">Elastic Security</a></li>
+      <li><a href="https://www.elastic.co/security-labs" target="_blank">Security Labs</a></li>
+      <li><a href="https://www.elastic.co/contact" target="_blank">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = (d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100;
+    document.getElementById('reading-progress').style.width = pct + '%';
+  });
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Scroll-triggered fade-ins
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
