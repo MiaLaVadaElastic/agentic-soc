@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html -->
+<!-- saved from url=(0056)file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -168,7 +168,7 @@ h2.title.light em { color: #7BB8FF; font-weight: 700; }
 .btn-ghost-light:hover { color: var(--e-blue); border-color: var(--e-blue); }
 
 /* ── TICKER (dark) ── */
-.ticker { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--d-border); border: 1px solid var(--d-border); border-radius: var(--radius-lg); overflow: hidden; }
+.ticker { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--d-border); border: 1px solid var(--d-border); border-radius: var(--radius-lg); overflow: hidden; max-width: 640px; }
 .tick { background: var(--d-bg2); padding: 1.5rem; position: relative; }
 .tick::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
 .tick.red::before { background: #F05252; }
@@ -193,6 +193,7 @@ h2.title.light em { color: #7BB8FF; font-weight: 700; }
 .two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 3rem; align-items: start; }
 
 /* ── NOT CARDS ── */
+.not-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 2rem; }
 .not-stack { display: flex; flex-direction: column; gap: 1rem; }
 .not-card { background: var(--e-bg-sub); border: 1px solid var(--e-border-lt); border-radius: var(--radius); padding: 1.4rem 1.5rem; }
 .not-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--e-danger); margin-bottom: 0.4rem; }
@@ -384,6 +385,7 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
   .footer-brand-col { grid-column: 1/-1; }
   .ticker { grid-template-columns: repeat(2,1fr); }
   .two-col { grid-template-columns: 1fr; }
+  .not-row { grid-template-columns: 1fr; }
   .cap-grid { grid-template-columns: 1fr; }
   .lc-grid { grid-template-columns: repeat(3,1fr); }
   .crisis-grid { grid-template-columns: repeat(2,1fr); }
@@ -415,12 +417,12 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
       <img src="./index_files/logo.png" alt="Elastic" style="height:32px;width:auto;display:block;">
     </a>
     <ul class="elastic-nav-links">
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Products <svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a></li>
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Solutions <svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a></li>
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Elasticsearch</a></li>
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Pricing</a></li>
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Docs</a></li>
-      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Blog</a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Products <svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Solutions <svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Elasticsearch</a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Pricing</a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Docs</a></li>
+      <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Blog</a></li>
     </ul>
     <div class="nav-right">
       <a href="https://www.elastic.co/contact" class="nav-btn-ghost">Contact sales</a>
@@ -433,23 +435,13 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
 <section class="hero">
   <div class="hero-inner">
     <h1>What is an <em>agentic security operations</em> platform?</h1>
-    <p class="hero-sub">Adversaries are executing attacks in seconds. The security model built for a world of human-speed threats is no longer adequate. This is the definitive vendor-agnostic guide to the architecture, capabilities, and organizational model of the agentic SOC.</p>
-    <p class="hero-platform-line"><strong>Autonomous agents handle the full lifecycle from ingestion through response.</strong> Your analysts handle judgment, verification, and approval. When your adversary moves at machine speed, every barrier is a gap they exploit.</p>
+    <p class="hero-sub">Security leaders are facing a generational platform decision. Before evaluating vendors, it's worth understanding what the agentic model actually requires — and what separates a platform built for this moment from one that wasn't.</p>
+    <p class="hero-platform-line"><strong>Autonomous agents handle the full lifecycle from ingestion through response.</strong> Your analysts handle judgment, verification, and approval.</p>
     <div class="btn-row">
-      <a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#evaluation" class="btn-primary">Evaluation checklist →</a>
-      <a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#faq" class="btn-ghost-dark">View FAQ</a>
+      <a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#evaluation" class="btn-primary">Evaluation checklist →</a>
+      <a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#faq" class="btn-ghost-dark">View FAQ</a>
     </div>
     <div class="ticker fade in">
-      <div class="tick red">
-        <div class="tick-label">Fastest recorded breakout</div>
-        <div class="tick-val">27s</div>
-        <div class="tick-desc">Initial compromise to lateral movement — the new floor for adversary speed</div>
-      </div>
-      <div class="tick amber">
-        <div class="tick-label">Average time to lateral move</div>
-        <div class="tick-val">29min</div>
-        <div class="tick-desc">The average window shrinks every quarter as AI-powered attacks mature</div>
-      </div>
       <div class="tick blue">
         <div class="tick-label">Analysts who find SOC work painful</div>
         <div class="tick-val">85%</div>
@@ -474,44 +466,27 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
     <p>An <strong>agentic security operations platform</strong> is a unified system in which autonomous AI agents handle the full security lifecycle — from data ingestion and alert correlation through threat investigation and response execution — while human analysts retain final judgment, approval authority, and strategic direction. Autonomous agents handle the full lifecycle from ingestion through response. Your analysts handle judgment, verification, and approval. It is distinguished from legacy SIEM, XDR, and SOAR tools by its capacity for adaptive reasoning rather than rigid, pre-scripted playbooks.</p>
   </div>
 
-  <div class="two-col fade">
-    <div>
-      <p style="font-size:14px;color:var(--e-subdued);line-height:1.85;margin-bottom:1.25rem;">The term "agentic" is precise. In AI systems design, an agent is a system that pursues a goal autonomously — choosing which tools to use, in what order, to achieve an outcome. Unlike a chatbot that responds to prompts, or a SOAR that executes pre-mapped playbooks, an AI agent <em>reasons</em>. It can handle attacks it has never seen before.</p>
-      <p style="font-size:14px;color:var(--e-subdued);line-height:1.85;margin-bottom:1.25rem;">The critical distinction: an agentic security operations platform does not replace the human analyst. It repositions them. The platform investigates, correlates, and builds the response plan. The analyst reads it, judges it, and approves it. This is the difference between a human <em>in</em> the loop and a human <em>on</em> the loop — and it is what separates an agentic platform from both the legacy model and the theoretical fully-autonomous SOC that no responsible security team should deploy.</p>
-      <p style="font-size:14px;color:var(--e-subdued);line-height:1.85;">This model is built to secure, not to tax. Every vendor-imposed barrier — fragmented tooling, coverage gaps, opaque AI, data locked behind rehydration delays — is an artificial constraint that prevents defenders from operating at the speed attacks now demand.</p>
+  <div class="not-row fade">
+    <div class="not-card">
+      <div class="not-label">Not this</div>
+      <h4>A fully autonomous SOC</h4>
+      <p>The agentic security operations platform is not a fully autonomous SOC. The human is not removed from the loop — they are moved to the top of it. The platform investigates, correlates, and builds the response plan. The analyst reads it, judges it, and approves it.</p>
     </div>
-    <div class="not-stack">
-      <div class="not-card">
-        <div class="not-label">Not this</div>
-        <h4>A fully autonomous SOC</h4>
-        <p>Every significant response action requires analyst judgment and approval before execution. Removing that gate is not the agentic model — it is an unacceptable risk posture.</p>
-      </div>
-      <div class="not-card">
-        <div class="not-label">Not this</div>
-        <h4>A SOAR with an AI layer</h4>
-        <p>Legacy SOAR tools execute deterministic playbooks. Agentic platforms reason through novel situations dynamically — they are architecturally different, not incrementally better.</p>
-      </div>
-      <div class="not-card">
-        <div class="not-label">Not this</div>
-        <h4>A next-generation SIEM</h4>
-        <p>A SIEM ingests and correlates. An agentic platform ingests, reasons, investigates, builds a case, proposes a response, and executes it — in one unified system.</p>
-      </div>
+    <div class="not-card">
+      <div class="not-label">Not this</div>
+      <h4>A SOAR with an AI layer</h4>
+      <p>Legacy SOAR tools execute deterministic playbooks. Agentic platforms reason through novel situations dynamically — they are architecturally different, not incrementally better.</p>
+    </div>
+    <div class="not-card">
+      <div class="not-label">Not this</div>
+      <h4>A next-generation SIEM</h4>
+      <p>A SIEM ingests and correlates. An agentic platform ingests, reasons, investigates, builds a case, proposes a response, and executes it — in one unified system.</p>
     </div>
   </div>
 </section>
 
 <div style="background:var(--e-bg-sub);">
 <div class="divider"><hr></div>
-</div>
-
-<!-- ═══ PULLQUOTE ═══ -->
-<div style="background:var(--e-bg-sub); padding: 0 2rem;">
-  <div style="max-width:var(--max); margin:0 auto; padding: 48px 0;">
-    <div class="pullquote fade">
-      <p>The question isn't whether to bring AI into your SOC. The adversary already answered that for you.</p>
-      <cite>— Mike Nichols, GM of Security, Elastic · "Architecting the SOC of the Future," April 2026</cite>
-    </div>
-  </div>
 </div>
 
 <!-- ═══ WHY NOW ═══ -->
@@ -577,36 +552,18 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
       <div class="cap-title">Ingestion at scale</div>
       <div class="cap-sub">Perceive everything, miss nothing</div>
       <p class="cap-body">An agentic platform can only reason over data it can see. Coverage gaps — whether forced by per-device pricing or rigid data pipelines — become attack surface. AI-driven threats are engineered to find unmonitored assets.</p>
-      <ul class="cap-list">
-        <li>Universal ingestion: SIEM, endpoint, cloud, SaaS, and threat intelligence in one platform</li>
-        <li>Automatic schema mapping — no pipeline engineering per new data source</li>
-        <li>Federated search across cloud, on-prem, and edge without forcing data centralization</li>
-        <li>Years of history queryable in real time — no rehydration delays during active incidents</li>
-      </ul>
     </div>
     <div class="cap-card">
       <div class="cap-n">02</div>
       <div class="cap-title">Reason at machine speed</div>
       <div class="cap-sub">AI grounded in your data, transparent by design</div>
       <p class="cap-body">The reasoning layer is where agentic platforms differ most from legacy tools. AI decisions must be grounded in your actual security data — not a connector abstraction — and transparent enough that analysts can validate every conclusion.</p>
-      <ul class="cap-list">
-        <li>AI reasoning over your data where it lives — no data copy, no connector abstraction</li>
-        <li>Composable AI skills: discrete, executable capabilities agents invoke dynamically</li>
-        <li>Full AI transparency — visible prompts, auditable decisions, no black boxes</li>
-        <li>Model agnosticism — any LLM, including on-premises models for air-gapped environments</li>
-      </ul>
     </div>
     <div class="cap-card">
       <div class="cap-n">03</div>
       <div class="cap-title">Prevention and response</div>
       <div class="cap-sub">From detection to containment at machine speed</div>
       <p class="cap-body">Prevention is the fastest possible response. But when an active incident requires containment, the response must execute faster than a human queue can process. Human judgment stays at the center — every action approved before it executes.</p>
-      <ul class="cap-list">
-        <li>Native automation in the same platform as detection — no separate SOAR integration</li>
-        <li>Adaptive reasoning over pre-scripted playbooks that break against novel attacks</li>
-        <li>Human on the loop — analyst judgment and approval before any significant action executes</li>
-        <li>World-class endpoint prevention with no per-device pricing that forces coverage gaps</li>
-      </ul>
     </div>
   </div>
 
@@ -694,7 +651,7 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
 <section class="section bg-sub" id="evaluation">
   <div class="eyebrow">Evaluation guide</div>
   <h2 class="title">Questions to ask before you <em>commit to a platform</em></h2>
-  <p class="lead">These questions are designed for CISOs and security leaders assessing platform readiness — not vendor pitches. A platform that cannot satisfy the critical criteria below cannot credibly claim the agentic label.</p>
+  <p class="lead">Not every platform claiming the agentic label was built for it. These questions help security leaders separate architectural reality from marketing positioning.</p>
 
   <div class="eval-list fade">
     <div class="eval-item">
@@ -824,51 +781,51 @@ table.cmp thead .hl { color: var(--e-blue-dark) !important; background: var(--e-
       <div class="footer-col">
         <h4>Security</h4>
         <ul>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">What is SIEM?</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">What is XDR?</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Agentic SOC</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Security Labs</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Elastic Security</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">What is SIEM?</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">What is XDR?</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Agentic SOC</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Security Labs</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Elastic Security</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Products</h4>
         <ul>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Elasticsearch</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Elastic Cloud</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Kibana</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Elastic Agent</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Pricing</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Elasticsearch</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Elastic Cloud</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Kibana</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Elastic Agent</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Pricing</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Resources</h4>
         <ul>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Documentation</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Blog</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Webinars</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Case studies</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Community</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Documentation</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Blog</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Webinars</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Case studies</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Community</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">About Elastic</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Careers</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Partners</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Press</a></li>
-          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Contact</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">About Elastic</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Careers</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Partners</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Press</a></li>
+          <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p>© 2026 Elasticsearch B.V. All rights reserved.</p>
       <ul class="footer-bottom-links">
-        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Privacy</a></li>
-        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Terms of use</a></li>
-        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Cookie policy</a></li>
-        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v5.html#">Sitemap</a></li>
+        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Privacy</a></li>
+        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Terms of use</a></li>
+        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Cookie policy</a></li>
+        <li><a href="file:///C:/Users/MiaLaVada/Downloads/agentex-soc-v6.html#">Sitemap</a></li>
       </ul>
     </div>
   </div>
